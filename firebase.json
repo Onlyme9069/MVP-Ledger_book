@@ -1,0 +1,8 @@
+{
+  "firestore": [
+    {
+      "database": "ai-studio-mvpledgerbook-8fd890db-0991-438e-b550-6af49704a252",
+      "rules": "firestore.rules"
+    }
+  ]
+}

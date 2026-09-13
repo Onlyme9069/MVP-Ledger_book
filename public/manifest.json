@@ -1,0 +1,62 @@
+{
+  "short_name": "MVP Ledger",
+  "name": "MVP Ledger Book Financial Portal",
+  "description": "Real-time ledger, expense tracking, and budget management with frosted glass ledger book theme.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "orientation": "portrait",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/ledger-book-icon.jpg",
+      "type": "image/jpeg",
+      "sizes": "1024x1024",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["finance", "productivity", "utilities"],
+  "shortcuts": [
+    {
+      "name": "Add Transaction",
+      "short_name": "New Entry",
+      "description": "Record a new credit or debit entry in the ledger book",
+      "url": "/",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "View Ledger",
+      "short_name": "Ledger",
+      "description": "View active ledger book records",
+      "url": "/",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

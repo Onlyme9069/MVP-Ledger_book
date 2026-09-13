@@ -1,0 +1,137 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with role-based access control for finance management",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique system document ID" },
+        "userId": { "type": "string", "description": "Internal login User ID" },
+        "name": { "type": "string", "description": "Display name of the user" },
+        "passwordHash": { "type": "string", "description": "SHA-256 secure hash of user's password" },
+        "role": { "type": "string", "enum": ["Super Admin", "Admin", "Finance Manager"] },
+        "status": { "type": "string", "enum": ["active", "disabled"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "name", "passwordHash", "role", "status", "createdAt", "updatedAt"]
+    },
+    "Record": {
+      "title": "Record",
+      "description": "Financial income or expense transaction record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique transaction record document ID" },
+        "transactionNature": { "type": "string", "enum": ["Income", "Expense"] },
+        "moneySender": { "type": "string", "description": "Name of the entity or individual sending the money" },
+        "moneyReceiver": { "type": "string", "description": "Name of the entity or individual receiving the money" },
+        "transactionType": { "type": "string", "enum": ["Cash", "UPI", "Other"] },
+        "amount": { "type": "number", "description": "Numeric transaction amount in INR" },
+        "purpose": { "type": "string", "description": "Reason or purpose of the transaction" },
+        "transactionDate": { "type": "string", "format": "date" },
+        "notes": { "type": "string", "description": "Additional notes/comments" },
+        "createdBy": { "type": "string", "description": "User ID of the creator" },
+        "status": { "type": "string", "enum": ["active", "deleted"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "transactionNature", "moneySender", "moneyReceiver", "transactionType", "amount", "purpose", "transactionDate", "createdBy", "status", "createdAt", "updatedAt"]
+    },
+    "Organization": {
+      "title": "Organization",
+      "description": "Details about the organization entity",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique organization identifier" },
+        "organizationName": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "organizationName", "createdAt"]
+    },
+    "Notice": {
+      "title": "Notice",
+      "description": "Ledger entry reported as incorrect or disputed by Admin",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique report ID" },
+        "recordId": { "type": "string", "description": "ID of the disputed record" },
+        "recordPurpose": { "type": "string", "description": "Purpose of the disputed record" },
+        "recordAmount": { "type": "number", "description": "Amount of the disputed record" },
+        "reason": { "type": "string", "description": "Preset reason or category" },
+        "customReason": { "type": "string", "description": "Custom detailed reason if preset is Other" },
+        "reportedBy": { "type": "string", "description": "User ID of the reporter" },
+        "reporterName": { "type": "string", "description": "Display name of the reporter" },
+        "status": { "type": "string", "enum": ["reported", "resolved"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "recordId", "recordPurpose", "recordAmount", "reason", "reportedBy", "reporterName", "status", "createdAt"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "Chat or inquiry message exchanged between users and finance managers",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "senderId": { "type": "string" },
+        "senderName": { "type": "string" },
+        "content": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "senderId", "senderName", "content", "createdAt"]
+    },
+    "Session": {
+      "title": "Session",
+      "description": "Active user authentication session stored on backend",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "userDocId": { "type": "string" },
+        "role": { "type": "string" },
+        "name": { "type": "string" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["userId", "userDocId", "role", "name", "createdAt"]
+    },
+    "Challenge": {
+      "title": "Challenge",
+      "description": "WebAuthn challenge for registration or authentication",
+      "type": "object",
+      "properties": {
+        "challenge": { "type": "string" },
+        "userId": { "type": "string" },
+        "expires": { "type": "number" }
+      },
+      "required": ["challenge", "userId", "expires"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "Collection of system users with password hashes and roles"
+    },
+    "/records/{recordId}": {
+      "schema": { "$ref": "#/entities/Record" },
+      "description": "Income and expense records entered by Finance Manager"
+    },
+    "/organization/{orgId}": {
+      "schema": { "$ref": "#/entities/Organization" },
+      "description": "Collection of organization configuration metadata"
+    },
+    "/notices/{noticeId}": {
+      "schema": { "$ref": "#/entities/Notice" },
+      "description": "Collection of disputed ledger records reported by Admins"
+    },
+    "/messages/{messageId}": {
+      "schema": { "$ref": "#/entities/Message" },
+      "description": "Collection of chat messages"
+    },
+    "/sessions/{sessionId}": {
+      "schema": { "$ref": "#/entities/Session" },
+      "description": "Active authentication session store"
+    },
+    "/challenges/{challengeId}": {
+      "schema": { "$ref": "#/entities/Challenge" },
+      "description": "Temporary WebAuthn authentication challenges"
+    }
+  }
+}
